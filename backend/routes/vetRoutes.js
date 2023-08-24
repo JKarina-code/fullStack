@@ -11,6 +11,7 @@ import {
 import checkAuth from "../middleware/authMiddleware.js";
 
 const router = express.Router();
+
 //Public Area
 router.post("/register", register);
 router.get("/confirm/:token", confirm);

@@ -1,9 +1,48 @@
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import clientAxios from "../api/axios";
+import Alert from "../components/Alert";
 
 export const Register = () => {
-  const handleSubmit = () => {
-    console.log("form");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [alert, setAlert] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if ([name, email, password, repeatPassword].includes("")) {
+      setAlert({ msg: "All fields are required", error: true });
+      return;
+    }
+
+    if (password !== repeatPassword) {
+      setAlert({ msg: "The passwords are not the same", error: true });
+      return;
+    }
+
+    if (password.length < 6) {
+      setAlert({ msg: "Password min 6 characters", error: true });
+      return;
+    }
+
+    setAlert({});
+
+    //Creating an user in API
+    try {
+      await clientAxios.post("/register", { name, email, password });
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
   };
+
+  const { msg } = alert;
   return (
     <>
       <div>
@@ -14,6 +53,7 @@ export const Register = () => {
       </div>
 
       <div className="mt-20 md:mt-5 shadow-lg px-5 py-10 rounded-xl bg-white">
+        {msg && <Alert alert={alert} />}
         <form onSubmit={handleSubmit}>
           <div className="my-5">
             <label className="uppercase text-gray-600 block text-xl font-bold">
@@ -23,6 +63,8 @@ export const Register = () => {
               type="text"
               placeholder="Name"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
           </div>
 
@@ -34,6 +76,8 @@ export const Register = () => {
               type="email"
               placeholder="Email"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
 
@@ -45,6 +89,9 @@ export const Register = () => {
               type="password"
               placeholder="Password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              autoComplete="off"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
 
@@ -56,6 +103,9 @@ export const Register = () => {
               type="password"
               placeholder="Repeat Password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
+              autoComplete="off"
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
             />
           </div>
 
