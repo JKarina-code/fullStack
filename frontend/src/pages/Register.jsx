@@ -34,6 +34,10 @@ export const Register = () => {
     //Creating an user in API
     try {
       await clientAxios.post("/register", { name, email, password });
+      setAlert({
+        msg: 'Created Successfully, check your email',
+        error: false
+    })
     } catch (error) {
       setAlert({
         msg: error.response.data.msg,
@@ -41,7 +45,6 @@ export const Register = () => {
       });
     }
   };
-
   const { msg } = alert;
   return (
     <>
@@ -123,7 +126,7 @@ export const Register = () => {
           </Link>
           <Link
             className="block text-center my-5 text-green-500"
-            to="/forgot-password"
+            to="/forgot-pass"
           >
             Forgot my password
           </Link>

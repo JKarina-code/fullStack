@@ -1,10 +1,12 @@
 import Vet from "../models/vet.js";
 import generateJWT from "../helpers/generateJWT.js";
 import generateId from "../helpers/generateId.js";
+import emailRegister from "../helpers/emailRegister.js";
+import emailForgotPassword from "../helpers/emailForgotPassword.js";
 
 const register = async (req, res) => {
   //Prevent duplicate users
-  const { email } = req.body;
+  const { email, name } = req.body;
 
   const userExist = await Vet.findOne({ email });
   if (userExist) {
@@ -16,6 +18,8 @@ const register = async (req, res) => {
     const vet = new Vet(req.body);
     const vetSave = await vet.save();
 
+    // Send email
+    emailRegister({ name, email, token: vetSave.token });
     res.json(vetSave);
   } catch (error) {
     throw error;
@@ -84,6 +88,12 @@ const forgotPassword = async (req, res) => {
     existsVet.token = generateId();
     await existsVet.save();
 
+    // Send email forgot password
+    emailForgotPassword({
+      email,
+      name:existsVet.name,
+      token:existsVet.token
+    })
     res.json({ msg: "Email sent with instructions" });
   } catch (error) {
     throw error;

@@ -51,7 +51,7 @@ export const Login = () => {
           </Link>
           <Link
             className="block text-center my-5 text-green-500"
-            to="/forgot-password"
+            to="/forgot-pass"
           >
             Forgot my password
           </Link>
