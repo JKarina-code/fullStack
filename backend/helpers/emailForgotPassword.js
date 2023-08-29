@@ -22,7 +22,7 @@ import nodemailer from "nodemailer";
         html: `<p>Hola: ${name}, has solicitado reestablecer tu password.</p>
 
         <p>Sigue el siguiente enlace para generar un nuevo password:
-        <a href="${process.env.FRONTEND_URL}/olvide-password/${token}">Reestablecer Password</a> </p>
+        <a href="${process.env.FRONTEND_URL}/forgot-pass/${token}">Reestablecer Password</a> </p>
 
         <p>Si tu no creaste esta cuenta, puedes ignorar este mensaje</p>
     `,

@@ -9,8 +9,9 @@ export const ForgotPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (email === " " || email.length < 6) {
+    if (email === "" || email.length < 6) {
       setAlert({ msg: "Your email is required", error: true });
+      return
     }
 
     try {
