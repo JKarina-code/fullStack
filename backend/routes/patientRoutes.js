@@ -1,16 +1,21 @@
 import express from "express";
-import { addPatient, getPatients, getPatient, updatePatient, deletePatient } from "../controllers/PatientController.js";
+import {
+  addPatient,
+  getPatients,
+  getPatient,
+  updatePatient,
+  deletePatient,
+} from "../controllers/PatientController.js";
 
 import checkAuth from "../middleware/authMiddleware.js";
 const router = express.Router();
 
-router.post("/addPatient", checkAuth, addPatient);
-router.get("/getPatients", checkAuth, getPatients);
+router.route("/").post(checkAuth, addPatient).get(checkAuth, getPatients);
 
-router.get("/getPatient/:id", checkAuth, getPatient);
-router.put("/updatePatient/:id", checkAuth, updatePatient);
-router.delete("/deletePatient/:id", checkAuth, deletePatient);
+router
+  .route("/:id")
+  .get(checkAuth, getPatient)
+  .put(checkAuth, updatePatient)
+  .delete(checkAuth, deletePatient);
 
 export default router;
-
-

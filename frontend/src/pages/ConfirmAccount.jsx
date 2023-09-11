@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import clientAxios from "../api/axios";
 import { useParams, Link } from "react-router-dom";
 import Alert from "../components/Alert";
+import clientAxios from "../api/axios";
 
-export const ConfirmAccount = () => {
+const ConfirmAccount = () => {
   const [accountConfirm, setAccountConfirm] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -12,12 +12,10 @@ export const ConfirmAccount = () => {
   const { id } = params;
 
   useEffect(() => {
-    const sustainAccount = async () => {
+    const confirmAccount = async () => {
       try {
-        const url = `/confirm/${id}`;
-        const { data } = await clientAxios(url);
+        const { data } = await clientAxios(`/vets/confirm/${id}`);
         setAccountConfirm(true);
-
         setAlert({
           msg: data.msg,
         });
@@ -27,10 +25,10 @@ export const ConfirmAccount = () => {
           error: true,
         });
       }
+      setLoading(false);
     };
 
-    setLoading(false);
-    sustainAccount();
+    confirmAccount();
   }, []);
 
   return (
@@ -54,3 +52,5 @@ export const ConfirmAccount = () => {
     </>
   );
 };
+
+export default ConfirmAccount;

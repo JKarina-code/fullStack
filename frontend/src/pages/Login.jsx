@@ -4,7 +4,7 @@ import Alert from "../components/Alert";
 import useAuth from "../hooks/useAuth";
 import clientAxios from "../api/axios";
 
-export const Login = () => {
+ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({});
@@ -19,7 +19,7 @@ export const Login = () => {
       return;
     }
     try {
-      const { data } = await clientAxios.post("/login", { email, password });
+      const { data } = await clientAxios.post("/vets/login", { email, password });
       localStorage.setItem("token", data.token);
       setAuth(data);
       navigate("/admin");
@@ -94,3 +94,5 @@ export const Login = () => {
     </>
   );
 };
+
+export default Login

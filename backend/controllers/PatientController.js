@@ -8,7 +8,7 @@ const addPatient = async (req, res) => {
     const patientSave = await patient.save();
     res.json(patientSave);
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 
@@ -24,9 +24,7 @@ const getPatient = async (req, res) => {
     return res.status(404).json({ msg: "No Found" });
   }
   if (patient.vet._id.toString() !== req.vet._id.toString()) {
-    return res.status(401).json({
-      message: "Invalid action",
-    });
+    return res.json({ msg: "Invalid action" });
   }
   res.json(patient);
 };
@@ -38,9 +36,7 @@ const updatePatient = async (req, res) => {
     return res.status(404).json({ msg: "No Found" });
   }
   if (patient.vet._id.toString() !== req.vet._id.toString()) {
-    return res.status(401).json({
-      message: "Invalid action",
-    });
+    return res.json({ msg: "Invalid action" });
   }
 
   patient.name = req.body.name || patient.name;
@@ -53,7 +49,7 @@ const updatePatient = async (req, res) => {
     const patientUpdate = await patient.save();
     res.json(patientUpdate);
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 const deletePatient = async (req, res) => {
@@ -63,16 +59,14 @@ const deletePatient = async (req, res) => {
     return res.status(404).json({ msg: "No Found" });
   }
   if (patient.vet._id.toString() !== req.vet._id.toString()) {
-    return res.status(401).json({
-      message: "Invalid action",
-    });
+    return res.json({ msg: "Invalid action" });
   }
 
   try {
     await patient.deleteOne();
     res.json({ msg: "Patient deleted" });
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 export { addPatient, getPatients, getPatient, updatePatient, deletePatient };

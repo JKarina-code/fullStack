@@ -3,11 +3,10 @@ import { Link } from "react-router-dom";
 import clientAxios from "../api/axios";
 import Alert from "../components/Alert";
 
-export const Register = () => {
+const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
   const [repeatPassword, setRepeatPassword] = useState("");
   const [alert, setAlert] = useState("");
 
@@ -33,7 +32,7 @@ export const Register = () => {
 
     //Creating an user in API
     try {
-      await clientAxios.post("/register", { name, email, password });
+      await clientAxios.post("/vets/register", { name, email, password });
       setAlert({
         msg: 'Created Successfully, check your email',
         error: false
@@ -135,3 +134,4 @@ export const Register = () => {
     </>
   );
 };
+export default Register

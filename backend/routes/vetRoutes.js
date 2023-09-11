@@ -18,8 +18,8 @@ router.get("/confirm/:token", confirm);
 router.post("/login", authenticate);
 
 router.post("/forgot-pass/", forgotPassword);
-router.get("/forgot-pass/:token", checkPassword);
-router.post("/forgot-pass/:token", newPassword);
+router.route("/forgot-pass/:token").get(checkPassword).post(newPassword);
+
 //Private Area
 router.get("/profile", checkAuth, profile);
 

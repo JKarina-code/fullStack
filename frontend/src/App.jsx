@@ -1,32 +1,33 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { AuthLayout, AdminRoute } from "./layout";
-import {
-  Login,
-  ConfirmAccount,
-  ForgotPassword,
-  Register,
-  NewPassword,
-  AdminPatients,
-} from "./pages";
+import AuthLayout from "./layout/AuthLayout";
+import AdminRoute from "./layout/AdminRoute";
+import AdminPatients from "./pages/AdminPatients";
+import ConfirmAccount from "./pages/ConfirmAccount";
+import ForgotPassword from "./pages/ForgotPassword";
+import Login from "./pages/Login";
+import NewPassword from "./pages/NewPassword";
+import Register from "./pages/Register";
 import { AuthProvider } from "./context/AuthProvider";
-
+import { PatientsProvider } from "./context/PatientsProvider";
 function App() {
   return (
     <BrowserRouter>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<AuthLayout />}>
-            <Route index element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot-pass" element={<ForgotPassword />} />
-            <Route path="/forgot-pass/:token" element={<NewPassword />} />
-            <Route path="/confirm/:id" element={<ConfirmAccount />} />
-          </Route>
+        <PatientsProvider>
+          <Routes>
+            <Route path="/" element={<AuthLayout />}>
+              <Route index element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/forgot-pass" element={<ForgotPassword />} />
+              <Route path="/forgot-pass/:token" element={<NewPassword />} />
+              <Route path="/confirm/:id" element={<ConfirmAccount />} />
+            </Route>
 
-          <Route path="/admin" element={<AdminRoute />}>
-            <Route index element={<AdminPatients />} />
-          </Route>
-        </Routes>
+            <Route path="/admin" element={<AdminRoute />}>
+              <Route index element={<AdminPatients />} />
+            </Route>
+          </Routes>
+        </PatientsProvider>
       </AuthProvider>
     </BrowserRouter>
   );

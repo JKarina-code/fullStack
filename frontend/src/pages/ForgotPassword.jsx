@@ -3,7 +3,7 @@ import { useState } from "react";
 import Alert from "../components/Alert";
 import clientAxios from "../api/axios";
 
-export const ForgotPassword = () => {
+const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [alert, setAlert] = useState({});
 
@@ -11,12 +11,11 @@ export const ForgotPassword = () => {
     e.preventDefault();
     if (email === "" || email.length < 6) {
       setAlert({ msg: "Your email is required", error: true });
-      return
+      return;
     }
 
     try {
-      const url = `/forgot-pass`;
-      const { data } = await clientAxios.post(url, { email });
+      const { data } = await clientAxios.post(`/vets/forgot-pass`, { email });
       setAlert({ msg: data.msg });
     } catch (error) {
       setAlert({
@@ -73,3 +72,5 @@ export const ForgotPassword = () => {
     </>
   );
 };
+
+export default ForgotPassword;

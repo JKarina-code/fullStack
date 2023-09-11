@@ -4,13 +4,16 @@ import clientAxios from "../api/axios";
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
+  const [loading, setLoading] = useState(true);
   const [auth, setAuth] = useState({});
-
   useEffect(() => {
     const authUser = async () => {
       const token = localStorage.getItem("token");
 
-      if (!token) return "error";
+      if (!token) {
+        setLoading(false);
+        return "error";
+      }
 
       const config = {
         headers: {
@@ -21,17 +24,24 @@ const AuthProvider = ({ children }) => {
       };
 
       try {
-        const url = "/profile";
-        const { data } = await clientAxios(url, config);
+        const { data } = await clientAxios("/vets/profile", config);
+
         setAuth(data);
       } catch (error) {
         console.log(error.response.data.msg);
       }
+
+      setLoading(false);
     };
     authUser();
   }, []);
+
+  const signOff = () => {
+    localStorage.removeItem("token");
+    setAuth({});
+  };
   return (
-    <AuthContext.Provider value={{ auth, setAuth }}>
+    <AuthContext.Provider value={{ auth, setAuth, loading, signOff }}>
       {children}
     </AuthContext.Provider>
   );

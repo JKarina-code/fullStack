@@ -1,4 +1,4 @@
-import Vet from "../models/vet.js";
+import Vet from "../models/Vet.js";
 import generateJWT from "../helpers/generateJWT.js";
 import generateId from "../helpers/generateId.js";
 import emailRegister from "../helpers/emailRegister.js";
@@ -22,7 +22,7 @@ const register = async (req, res) => {
     emailRegister({ name, email, token: vetSave.token });
     res.json(vetSave);
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 
@@ -35,18 +35,18 @@ const confirm = async (req, res) => {
   const { token } = req.params;
   const userConfirm = await Vet.findOne({ token });
 
-  if (!userConfirm) {
-    const error = new Error("Invalid token");
-    return res.status(404).json({ msg: error.message });
-  }
-
   try {
     userConfirm.token = null;
     userConfirm.confirmed = true;
     await userConfirm.save();
     res.json({ msg: "User confirmed successfully" });
   } catch (error) {
-    throw error;
+    console.log(error);
+  }
+
+  if (!userConfirm) {
+    const error = new Error("Invalid token");
+    return res.status(404).json({ msg: error.message });
   }
 };
 
@@ -91,12 +91,12 @@ const forgotPassword = async (req, res) => {
     // Send email forgot password
     emailForgotPassword({
       email,
-      name:existsVet.name,
-      token:existsVet.token
-    })
+      name: existsVet.name,
+      token: existsVet.token,
+    });
     res.json({ msg: "Email sent with instructions" });
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 
@@ -130,7 +130,7 @@ const newPassword = async (req, res) => {
     await vet.save();
     res.json({ msg: "Password changed successfully " });
   } catch (error) {
-    throw error;
+    console.log(error);
   }
 };
 export {

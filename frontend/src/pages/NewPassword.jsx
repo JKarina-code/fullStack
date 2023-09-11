@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import Alert from "../components/Alert";
 import { Link, useParams } from "react-router-dom";
 import clientAxios from "../api/axios";
+import Alert from "../components/Alert";
 
-export const NewPassword = () => {
+const NewPassword = () => {
   const [password, setPassword] = useState("");
   const [alert, setAlert] = useState({});
   const [validToken, setValidToken] = useState(false);
@@ -12,23 +12,22 @@ export const NewPassword = () => {
   const { token } = params;
 
   useEffect(() => {
-    const checktoken = async () => {
+    const checkToken = async () => {
       try {
-        const url = `/forgot-pass/${token}`;
-        const { data } = await clientAxios(url);
-        setValidToken(true);
+        const { data } = await clientAxios(`/vets/forgot-pass/${token}`);
         setAlert({
-          msg: data.msg,
+          msg: "Add your new password",
         });
+        setValidToken(true);
       } catch (error) {
         setAlert({
-          msg: error.response.data.msg,
+          msg: "There was an error in the link",
           error: true,
         });
       }
     };
 
-    checktoken();
+    checkToken();
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,8 +38,9 @@ export const NewPassword = () => {
     }
 
     try {
-      const url = `/forgot-pass/${token}`;
-      const { data } = await clientAxios.post(url, { password });
+      const { data } = await clientAxios.post(`/vets/forgot-pass/${token}`, {
+        password,
+      });
 
       setAlert({ msg: data.msg });
 
@@ -98,3 +98,5 @@ export const NewPassword = () => {
     </>
   );
 };
+
+export default NewPassword;
