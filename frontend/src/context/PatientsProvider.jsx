@@ -1,8 +1,10 @@
 import { createContext, useEffect, useState } from "react";
 import clientAxios from "../api/axios";
+import useAuth from "../hooks/useAuth";
 const PatientsContext = createContext();
 
 const PatientsProvider = ({ children }) => {
+  const { auth } = useAuth();
   const [patients, setPatients] = useState([]);
   const [patient, setPatient] = useState({});
 
@@ -25,7 +27,7 @@ const PatientsProvider = ({ children }) => {
     };
 
     getPatients();
-  }, []);
+  }, [auth]);
 
   const savePatient = async (patient) => {
     const token = localStorage.getItem("token");
@@ -63,12 +65,43 @@ const PatientsProvider = ({ children }) => {
       }
     }
   };
+
+  const setEdition = (patient) => {
+    setPatient(patient);
+  };
+
+  const deletePatient = async (id) => {
+    const confirmed = confirm("You confirm that you want to delete the patient?");
+    if (confirmed) {
+      try {
+        const token = localStorage.getItem("token");
+
+        const config = {
+          headers: {
+            "Content-Type": "application/json",
+            "X-Requested-With": "XMLHttpRequest",
+            Authorization: `Bearer ${token}`,
+          },
+        };
+
+        await clientAxios.delete(`/patients/${id}`, config);
+        const patientsUpdate = patients.filter(
+          (patientState) => patientState._id !== id
+        );
+        setPatients(patientsUpdate);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
   return (
     <PatientsContext.Provider
       value={{
         patients,
         savePatient,
         patient,
+        setEdition,
+        deletePatient,
       }}
     >
       {children}

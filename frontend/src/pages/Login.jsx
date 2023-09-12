@@ -46,24 +46,27 @@ import clientAxios from "../api/axios";
 
         <form onSubmit={handleSubmit}>
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <span className="uppercase text-gray-600 block text-xl font-bold">
               Email
-            </label>
+            </span>
             <input
               type="email"
               placeholder="Email"
+              name="email"
+              autoComplete="off"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <span className="uppercase text-gray-600 block text-xl font-bold">
               Password
-            </label>
+            </span>
             <input
               type="password"
               placeholder="Your Password"
+              name="password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
               autoComplete="off"
               value={password}
@@ -74,6 +77,7 @@ import clientAxios from "../api/axios";
           <input
             type="submit"
             value="Login"
+            name="submit"
             className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto "
           />
         </form>

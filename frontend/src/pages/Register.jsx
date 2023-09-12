@@ -58,12 +58,13 @@ const Register = () => {
         {msg && <Alert alert={alert} />}
         <form onSubmit={handleSubmit}>
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <span className="uppercase text-gray-600 block text-xl font-bold">
               Name
-            </label>
+            </span>
             <input
               type="text"
               placeholder="Name"
+              name="name"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -71,11 +72,12 @@ const Register = () => {
           </div>
 
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <span className="uppercase text-gray-600 block text-xl font-bold">
               Email
-            </label>
+            </span>
             <input
               type="email"
+              name="email"
               placeholder="Email"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
               value={email}
@@ -84,12 +86,13 @@ const Register = () => {
           </div>
 
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <span className="uppercase text-gray-600 block text-xl font-bold">
               Password
-            </label>
+            </span>
             <input
               type="password"
               placeholder="Password"
+              name="password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
               autoComplete="off"
               value={password}
@@ -98,12 +101,13 @@ const Register = () => {
           </div>
 
           <div className="my-5">
-            <label className="uppercase text-gray-600 block text-xl font-bold">
+            <span className="uppercase text-gray-600 block text-xl font-bold">
               Repeat Password
-            </label>
+            </span>
             <input
               type="password"
               placeholder="Repeat Password"
+              name="Repeat Password"
               className="border w-full p-3 mt-3 bg-gray-50 rounded-xl"
               autoComplete="off"
               value={repeatPassword}
@@ -114,6 +118,7 @@ const Register = () => {
           <input
             type="submit"
             value="Create Account"
+            name="submit"
             className="bg-indigo-700 w-full py-3 px-10 rounded-xl text-white uppercase font-bold mt-5 hover:cursor-pointer hover:bg-indigo-800 md:w-auto "
           />
         </form>

@@ -34,7 +34,10 @@ const profile = (req, res) => {
 const confirm = async (req, res) => {
   const { token } = req.params;
   const userConfirm = await Vet.findOne({ token });
-
+  if (!userConfirm) {
+    const error = new Error("Invalid token");
+    return res.status(404).json({ msg: error.message });
+  }
   try {
     userConfirm.token = null;
     userConfirm.confirmed = true;
@@ -42,11 +45,6 @@ const confirm = async (req, res) => {
     res.json({ msg: "User confirmed successfully" });
   } catch (error) {
     console.log(error);
-  }
-
-  if (!userConfirm) {
-    const error = new Error("Invalid token");
-    return res.status(404).json({ msg: error.message });
   }
 };
 

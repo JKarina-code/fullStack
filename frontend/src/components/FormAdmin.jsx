@@ -60,13 +60,15 @@ const FormAdmin = () => {
         onSubmit={handleSubmit}
       >
         <div className="mb-5">
-          <label htmlFor="name" className="text-gray-700 uppercase font-bold">
+          <span htmlFor="name" className="text-gray-700 uppercase font-bold">
             Name your pet
-          </label>
+          </span>
           <input
             id="name"
             type="text"
+            name="name"
             placeholder="name your pet"
+            autoComplete="off"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -74,13 +76,15 @@ const FormAdmin = () => {
         </div>
 
         <div className="mb-5">
-          <label htmlFor="owner" className="text-gray-700 uppercase font-bold">
+          <span htmlFor="owner" className="text-gray-700 uppercase font-bold">
             Name owner
-          </label>
+          </span>
           <input
             id="owner"
             type="text"
+            name = "owner"
             placeholder="Owner name"
+            autoComplete="off"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             value={owner}
             onChange={(e) => setOwner(e.target.value)}
@@ -88,13 +92,15 @@ const FormAdmin = () => {
         </div>
 
         <div className="mb-5">
-          <label htmlFor="email" className="text-gray-700 uppercase font-bold">
+          <span htmlFor="email" className="text-gray-700 uppercase font-bold">
             Email owner
-          </label>
+          </span>
           <input
             id="email"
             type="email"
+            name="email"
             placeholder="Owner email"
+            autoComplete="off"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
@@ -102,12 +108,13 @@ const FormAdmin = () => {
         </div>
 
         <div className="mb-5">
-          <label htmlFor="date" className="text-gray-700 uppercase font-bold">
+          <span htmlFor="date" className="text-gray-700 uppercase font-bold">
             Discharge Date
-          </label>
+          </span>
           <input
             id="date"
             type="date"
+            name="date"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             value={date}
             onChange={(e) => setDate(e.target.value)}
@@ -115,15 +122,16 @@ const FormAdmin = () => {
         </div>
 
         <div className="mb-5">
-          <label
+          <span
             htmlFor="symptoms"
             className="text-gray-700 uppercase font-bold"
           >
             Symptoms
-          </label>
+          </span>
           <textarea
             id="symptoms"
             placeholder="Describe the symptoms"
+            name="symptoms"
             className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
             value={symptoms}
             onChange={(e) => setSymptoms(e.target.value)}
@@ -133,6 +141,7 @@ const FormAdmin = () => {
         <input
           type="submit"
           value={id ? "Save" : "Add patient"}
+          name="submit"
           className="bg-indigo-600 w-full p-3 text-white uppercase font-bold hover:bg-indigo-800 cursor-pointer transition-colors"
         />
       </form>
