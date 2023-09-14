@@ -7,6 +7,7 @@ import {
   forgotPassword,
   checkPassword,
   newPassword,
+  updateProfile,
 } from "../controllers/VetController.js";
 import checkAuth from "../middleware/authMiddleware.js";
 
@@ -22,5 +23,6 @@ router.route("/forgot-pass/:token").get(checkPassword).post(newPassword);
 
 //Private Area
 router.get("/profile", checkAuth, profile);
+router.put("/profile/:id", checkAuth, updateProfile)
 
 export default router;

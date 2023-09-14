@@ -131,6 +131,34 @@ const newPassword = async (req, res) => {
     console.log(error);
   }
 };
+
+const updateProfile = async (req, res) => {
+  const vet = await Vet.findById(req.params.id); //info in bd
+  if (!vet) {
+    const error = new Error("There was an error");
+    return res.status(400).json({ msg: error.message });
+  }
+
+  const { email } = req.body;
+  if (vet.email !== req.body.email) {
+    const existEmail = await Vet.findOne({ email });
+    if (existEmail) {
+      const error = new Error("That  email is already in use");
+      return res.status(400).json({ msg: error.message });
+    }
+  }
+  try {
+    vet.name = req.body.name;
+    vet.email = req.body.email;
+    vet.web = req.body.web;
+    vet.cellphone = req.body.cellphone;
+
+    const vetUpdate = await vet.save();
+    res.json(vetUpdate);
+  } catch (error) {
+    console.log(error);
+  }
+};
 export {
   register,
   profile,
@@ -139,4 +167,5 @@ export {
   forgotPassword,
   newPassword,
   checkPassword,
+  updateProfile,
 };

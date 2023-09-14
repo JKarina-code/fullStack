@@ -11,7 +11,6 @@ const emailForgotPassword = async (data) => {
   });
 
   const { email, name, token } = data;
-  console.log(data);
   //Enviar el email
 
   const info = await transport.sendMail({
